@@ -1,0 +1,33 @@
+#!/bin/bash
+#SBATCH -o splicing.%j.out
+#SBATCH -e splicing.%j.err
+#SBATCH --mail-type=END,FAIL
+#SBATCH --mail-user=$USER@jax.org
+#SBATCH --mem=20000
+#SBATCH --cpus-per-task=4
+#SBATCH -p compute
+#SBATCH -q batch
+#SBATCH -t 24:00:00
+
+# change directory into directory where job was submitted
+cd $SLURM_SUBMIT_DIR
+
+# specify indices you want to make, this says seq from 120 to 150 by increments of 10
+read_len=$(seq 120 10 150)
+
+for len in ${read_len};
+        do
+
+        mkdir star_$len
+        cd $SLURM_SUBMIT_DIR/star_$len
+
+        /projects/anczukow-lab/singularity_containers/STAR-2.7.9a/bin/Linux_x86_64_static/STAR \
+                --runThreadN 6 \
+                --runMode genomeGenerate \
+                --genomeDir $SLURM_SUBMIT_DIR/star_$len \
+                --genomeFastaFiles ../../*primary_assembly.genome.fa \
+                --sjdbGTFfile ../../*primary_assembly.annotation.gtf \
+                --sjdbOverhang $((len-1))
+
+        cd $SLURM_SUBMIT_DIR
+done

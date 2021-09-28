@@ -1,0 +1,69 @@
+Creator: Laura Urbanski
+Date: 01/14/2020
+
+Purpose of this document: share how the files were retreived and what they correspond to
+all files were downloaded from here: https://www.gencodegenes.org/human/
+
+
+******************** GTF FILES ********************
+
+Gencode human CHR GTF: gencode.v32.annotation.gtf
+        It contains the comprehensive gene annotation on the reference chromosomes only
+        This is the main annotation file for most users
+
+        To download:
+                $ wget ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_32/gencode.v32.annotation.gtf.gz
+                $ gunzip gencode.v32.annotation.gtf.gz
+
+
+
+Gencode human PRI GTF: gencode.v32.primary_assembly.annotation.gtf
+        It contains the comprehensive gene annotation on the primary assembly (chromosomes and scaffolds) sequence regions
+        This is a superset of the main annotation file
+        ***Use this file for STAR***
+
+        To download:
+                $ wget ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_32/gencode.v32.primary_assembly.annotation.gtf.gz
+                $ gunzip gencode.v32.primary_assembly.annotation.gtf.gz
+
+Gencode human PRI GFF3: gencode.v32.primary_assembly.annotation.gff3
+        It is the same as PRI GTF but in GFF3 format
+
+        To download:
+                $ wget ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_32/gencode.v32.primary_assembly.annotation.gff3.gz
+                $ gunzip gencode.v32.primary_assembly.annotation.gff3.gz
+
+
+Gencode human ALL GTF: gencode.v32.chr_patch_hapl_scaff.annotation.gtf
+        It contains the comprehensive gene annotation on the reference chromosomes, scaffolds, assembly patches and alternate loci (haplotypes)
+        This is a superset of the main annotation file
+
+        To download:
+                $ wget ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_32/gencode.v32.chr_patch_hapl_scaff.annotation.gtf.gz
+                $ gunzip gencode.v32.chr_patch_hapl_scaff.annotation.gtf.gz
+
+Gtf file modified for the postprocessing step:
+
+grep -v "^#" /projects/anczukow-lab/reference_genomes/human/Gencode/gencode.v32.annotation.gtf | awk -F "\t" '$3=="gene"' | grep -v "readthrough" > /projects/anczukow-lab/reference_genomes/human/Gencode/gencode.v32.annotation_gene_only_for_postprocessing.gtf
+
+
+************ FASTA FILES *********************
+
+Gencode human ALL Fasta: GRCh38.p13.genome.fa
+        Nucleotide sequence of the GRCh38.p13 genome assembly version on all regions, including reference chromosomes, scaffolds, assembly patches and haplotypes
+        The sequence region names are the same as in the GTF/GFF3 files
+
+        To download:
+                $ wget ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_32/GRCh38.p13.genome.fa.gz
+                $ gunzip GRCh38.p13.genome.fa.gz
+
+
+Gencode human PRI Fasta: GRCh38.primary_assembly.genome.fa
+        Nucleotide sequence of the GRCh38 primary genome assembly (chromosomes and scaffolds)
+        The sequence region names are the same as in the GTF/GFF3 files
+        *** Use this for STAR ****
+
+        To download:
+                $ wget ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_32/GRCh38.primary_assembly.genome.fa.gz
+                $ gunzip GRCh38.primary_assembly.genome.fa.gz
+

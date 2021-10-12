@@ -135,4 +135,4 @@ process STAR {
     tar -czvf star_\${start_version}_\${ref_name}_${read_length}.tar.gz star_\${start_version}_\${ref_name}_$read_length
 
     """
-  }
+}

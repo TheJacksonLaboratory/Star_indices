@@ -27,7 +27,7 @@ The typical command for running the pipeline is as follows:
                         (default: false)
     --read_length_by    Value to increment the read length by (int)
                         If not provided, it defaults to an increment of 10.
-                        (default: false)
+                        (default: 10)
 
     STAR Options:
     --star_container    Nextflow-compatible container with STAR (string)

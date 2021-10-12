@@ -31,7 +31,7 @@ The typical command for running the pipeline is as follows:
 
     STAR Options:
     --star_container    Nextflow-compatible container with STAR (string)
-                        (default: quay.io/lifebitai/star_indeces:2.7.9a)
+                        (default: quay.io/lifebitai/star_indices:2.7.9a)
     --index_n_bases     Value for STAR genomeSAindexNbases parameter (int)
                         (default: 8)
 

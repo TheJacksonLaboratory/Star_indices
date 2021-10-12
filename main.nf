@@ -73,8 +73,7 @@ if (params.read_length) {
 
 if (params.read_length_from && params.read_length_to) {
   Channel
-      .from(params.read_length_from..params.read_length_to)
-      .filter{ it % params.read_length_by == 0 }
+      .from((params.read_length_from..params.read_length_to).by(params.read_length_by))
       .set { ch_read_length }
 }
 

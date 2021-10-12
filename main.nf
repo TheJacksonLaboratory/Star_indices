@@ -77,30 +77,6 @@ if (params.read_length_from && params.read_length_to) {
       .set { ch_read_length }
 }
 
-// Define Process
-process check_reference {
-  tag "$reference"
-  label 'low_memory'
-
-  input:
-  file(reference) from ch_input_reference
-  
-  output:
-  file("*.fa") into ch_uncompressed_reference
-
-  script:
-  """
-  reference_name=`echo $reference | cut -d'.' --complement -f2-`
-
-  {
-    echo "Uncompressing $reference"
-    gunzip -c $reference > \${reference_name}.fa
-  } || {
-    echo "File not compressed $reference"
-    mv $reference \${reference_name}.fa
-  }
-  """
-}
 
 process STAR {
     tag "$read_length"
@@ -108,7 +84,7 @@ process STAR {
     publishDir "${params.outdir}", mode: 'copy'
 
     input:
-    each file(reference) from ch_uncompressed_reference
+    each file(reference) from ch_input_reference
     each file(gtf) from ch_input_gtf
     val(read_length) from ch_read_length
     
@@ -116,21 +92,41 @@ process STAR {
     file("star_*.tar.gz")
 
     script:
-    """
-    start_version=\$(STAR --version)
-    ref_name=\$(basename $reference)
+    ref_name = reference.simpleName
 
-    mkdir star_\${start_version}_\${ref_name}_$read_length 
+    if (reference.extension == 'gz') {
+      ref_file = "${ref_name}.fa"
+      unzip_fa_cmd = "gunzip -c ${reference} > ${ref_file}"
+    } else {
+      ref_file = reference.name
+      unzip_fa_cmd = ""
+    }
+
+    if (gtf.extension == 'gz') {
+      gtf_file = "${gtf.simpleName}.gtf"
+      unzip_gtf_cmd = "gunzip -c ${gtf} > ${gtf_file}"
+    } else {
+      gtf_file = gtf.name
+      unzip_gtf_cmd = ""
+    }
+
+    """
+    ${unzip_fa_cmd}
+    ${unzip_gtf_cmd}
+
+    star_version=\$(STAR --version)
+
+    mkdir star_\${star_version}_${ref_name}_$read_length 
 
     STAR --runMode genomeGenerate \
         --runThreadN $task.cpus \
-        --genomeDir star_\${start_version}_\${ref_name}_$read_length \
-        --genomeFastaFiles $reference \
-        --sjdbGTFfile $gtf \
+        --genomeDir star_\${star_version}_${ref_name}_$read_length \
+        --genomeFastaFiles ${ref_file} \
+        --sjdbGTFfile ${gtf_file} \
         --sjdbOverhang \$(($read_length-1)) \
         --genomeSAindexNbases $params.index_n_bases
     
-    tar -czvf star_\${start_version}_\${ref_name}_${read_length}.tar.gz star_\${start_version}_\${ref_name}_$read_length
+    tar -czvf star_\${star_version}_${ref_name}_${read_length}.tar.gz star_\${star_version}_${ref_name}_${read_length}
 
     """
 }

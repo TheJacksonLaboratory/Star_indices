@@ -1,10 +1,11 @@
-FROM continuumio/miniconda3@sha256:a2e6aa4cd0b6dd696ae9e3e5732943250a977ab3a42b2fe5fb7ef0c19d2d9f16
-LABEL description="Dockerfile containing all the requirements for the report of - " \
-      author="your_email@website.domain"
+# continuumio/miniconda3:4.10.3-alpine
+FROM continuumio/miniconda3@sha256:e007b47bbf7de9db9adec13588593d02cdaf0c32ee257f7a2f88737bf8b9945d
+LABEL description="Dockerfile containing all the requirements for STAR RNA-seq read aligner" \
+      author="ines@lifebit.ai"
 
 ARG ENV_NAME="base"
 
-RUN apk add --no-cache bash=5.0.17-r0 procps=3.3.16-r0
+RUN apk add --no-cache bash=5.1.4-r0 procps=3.3.17-r0
 
 COPY environment.yml /
 RUN conda env update -n ${ENV_NAME} -f environment.yml && conda clean -a
@@ -18,3 +19,6 @@ RUN conda env export --name ${ENV_NAME} > ${ENV_NAME}_exported.yml
 # Initialise bash for conda
 RUN conda init bash
 
+USER root
+WORKDIR /data/
+CMD ["bash"]

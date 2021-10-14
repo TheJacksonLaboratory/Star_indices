@@ -67,7 +67,7 @@ if (!params.read_length_from && params.read_length_to){exit 1, "Error: Missing -
 
 if (params.read_length) {
   Channel
-      .from(params.read_length.split(','))
+      .from(params.read_length.toString().split(','))
       .set { ch_read_length }
 }
 

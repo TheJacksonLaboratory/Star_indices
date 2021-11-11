@@ -2,17 +2,15 @@
 
 PR centric changelog with description of notable changes implemented in a PR.
 
-### 0.0.0.9000
+### v 1.0 Initial release
 
-PR: https://github.com/<github-username>/<github-repo>/pull/1
+PR: https://github.com/TheJacksonLaboratory/Star_indices/pull/9
 
 
 #### Added
 
-<!-- 
-Example: 
-- Added Dockerfile 
--->
+Added all necessary parts to run the pipline locally, on sumner and on cloudos. Use corresponding profiles and configs to run in each environment.
+
 
 #### Changed
 

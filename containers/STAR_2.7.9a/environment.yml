@@ -1,0 +1,8 @@
+name: conda-env-name
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - nano
+  - star=2.7.9a

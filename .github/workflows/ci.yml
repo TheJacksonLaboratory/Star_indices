@@ -8,8 +8,9 @@ jobs:
     strategy:
       matrix:
         nxf_ver: ['20.01.0', '']
+        star_container_tag: ["2.7.3a", "2.7.9a"]
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v2.4.0
       - name: Install Nextflow
         run: |
           export NXF_VER=${{ matrix.nxf_ver }}
@@ -17,4 +18,4 @@ jobs:
           sudo mv nextflow /usr/local/bin/
       - name: Basic workflow tests
         run: |
-          nextflow run ${GITHUB_WORKSPACE} --config conf/test.config
+          nextflow run ${GITHUB_WORKSPACE} --config conf/test.config --star_container "quay.io/lifebitai/star_indices:${{ matrix.star_container_tag }}"

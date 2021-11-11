@@ -41,15 +41,15 @@ The typical command for running the pipeline is as follows:
 
     Resource Options:
     --max_cpus      Maximum number of CPUs per process (int)
-                    (default: 4)  
+                    (default: 16)  
     --max_memory    Maximum memory per process (memory unit)
-                    (default: 20.GB)
+                    (default: 100.GB)
     --max_time      Maximum time per process (time unit)
                     (default: 72.h)
 
 ## Basic run command example
 
-    nextflow run main.nf --reference sample.fa --gtf sample.gtf --read_length_from 50 --read_length_to 150
+    nextflow run main.nf --reference sample.fa --annotation sample.gtf --read_length_from 50 --read_length_to 150
 
 ## Run test locally
 

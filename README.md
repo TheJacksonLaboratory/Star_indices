@@ -10,7 +10,7 @@ This workflow minimal requirements are at least 1 CPUs and 20-60GB of memory (de
 
 The typical command for running the pipeline is as follows:
 
-    nextflow run main.nf --reference sample.fa --gtf sample.gtf [Options]
+    nextflow run main.nf --reference sample.fa --annotation sample.gtf [Options]
 
     Inputs Options:
     --reference         Reference file (fasta, can be .gz-compressed)

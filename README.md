@@ -14,7 +14,7 @@ The typical command for running the pipeline is as follows:
 
     Inputs Options:
     --reference         Reference file (fasta, can be .gz-compressed)
-    --gtf               Annotation file (GTF, can be .gz-compressed)
+    --annotation        Annotation file (GTF, can be .gz-compressed)
 
     Read Length Options:
     Use either:

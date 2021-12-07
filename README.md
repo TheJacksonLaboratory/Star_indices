@@ -2,9 +2,34 @@
 
 Workflow for the automation of STAR indices creation from reference data. 
 
-## Requirements
+## Hardware requirements
 
-This workflow minimal requirements are at least 1 CPUs and 20-60GB of memory (depending on reference genome). For optimal execution providing more resources will speedup the workflow by parallelizing the indexing tasks - 4 cores and 20-60Gb RAM per each read_length you want to run in parallel. For small input data like test data it can be run with as few as 2 CPUs and 4GB of memory.
+This workflow minimal requirements highly depend on the reference organism genome size, especially for RAM usage. For CPUs at least 1 CPU is enough to run the pipeline, however it does highly benefit from parallelisation on up to 16-32 CPUs. Below are the minmal and optimal resource requirements needed to run the pipeline locally and on the cloud.
+
+### Minimal requirement to run locally
+
+| Organism |Genome fasta size, Gb | Max average CPU utilisation observed | Minimal RAM | Estimated runtime |
+|---|---|---|---|---|
+| Yeast      | 0.01 | 1 | 4 Gb  | 0:04:00 |
+| Drosophila | 0.15 | 2 | 7 Gb  | 0:10:00 |
+| Mouse      | 2.78 | 4 | 29 Gb | 1:20:00 |
+| Human      | 3.15 | 8 | 34 Gb | 1:30:00 |
+
+Note that for higher overhang sizes and higher number of CPUs involved RAM usage can go up to 10-20% higher than stated in the table above.
+
+### Optimal requirements to run on the Google Cloud
+On Google Cloudit it is not possible to request number of CPUs and gigabytes of RAM very different from proportion 1 CPU - 4 Gb RAM (such as 1 CPU - 32 GB). Therefore optimal resource usage on cloud must include more CPUs for higher RAM usage even if pipeline cannot take advantage of all CPUs.
+
+| Organism |Genome fasta size, Gb | Optimal CPUs | Optimal RAM | Optimal runtime |
+|---|---|---|---|---|
+| Yeast      | 0.01 | 2 | 4 Gb | 0:04:00 |
+| Drosophila | 0.15 | 4 | 8 Gb | 0:10:00 |
+| Mouse      | 2.78 | 8 | 32 Gb | 1:20:00 |
+| Human      | 3.15 |16 | 64 Gb | 1:30:00 |
+
+Supporting information: benchmarking [google sheet](https://docs.google.com/spreadsheets/d/1s6D8XDZQFxa-ac8IcGjHe_iJsdq8RwZqzAWxnjTNkfc/edit?usp=sharing).
+
+For small input data like test data it can be run with as few as 2 CPUs and 4GB of memory.
 
 ## Usage
 

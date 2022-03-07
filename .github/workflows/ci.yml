@@ -10,7 +10,7 @@ jobs:
         nxf_ver: ['20.01.0', '']
         star_container_tag: ["2.7.3a", "2.7.9a"]
     steps:
-      - uses: actions/checkout@v2.4.0
+      - uses: actions/checkout@v3
       - name: Install Nextflow
         run: |
           export NXF_VER=${{ matrix.nxf_ver }}
